@@ -25,6 +25,7 @@ message DateTime {
 }
 
 message RequestDateTime {
+    string Value = 2;
 }
 
 // For random password
