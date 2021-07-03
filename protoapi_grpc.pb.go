@@ -169,5 +169,5 @@ var Random_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api.proto",
+	Metadata: "protoapi.proto",
 }
