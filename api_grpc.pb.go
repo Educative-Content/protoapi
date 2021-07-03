@@ -18,7 +18,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RandomClient interface {
-	GetDate(ctx context.Context, in *RandomParams, opts ...grpc.CallOption) (*DateTime, error)
+	GetDate(ctx context.Context, in *RquestDateTime, opts ...grpc.CallOption) (*DateTime, error)
 	GetRandom(ctx context.Context, in *RandomParams, opts ...grpc.CallOption) (*RandomInt, error)
 	GetRandomPass(ctx context.Context, in *RequestPass, opts ...grpc.CallOption) (*RandomPass, error)
 }
@@ -31,7 +31,7 @@ func NewRandomClient(cc grpc.ClientConnInterface) RandomClient {
 	return &randomClient{cc}
 }
 
-func (c *randomClient) GetDate(ctx context.Context, in *RandomParams, opts ...grpc.CallOption) (*DateTime, error) {
+func (c *randomClient) GetDate(ctx context.Context, in *RquestDateTime, opts ...grpc.CallOption) (*DateTime, error) {
 	out := new(DateTime)
 	err := c.cc.Invoke(ctx, "/Random/GetDate", in, out, opts...)
 	if err != nil {
@@ -62,7 +62,7 @@ func (c *randomClient) GetRandomPass(ctx context.Context, in *RequestPass, opts 
 // All implementations must embed UnimplementedRandomServer
 // for forward compatibility
 type RandomServer interface {
-	GetDate(context.Context, *RandomParams) (*DateTime, error)
+	GetDate(context.Context, *RquestDateTime) (*DateTime, error)
 	GetRandom(context.Context, *RandomParams) (*RandomInt, error)
 	GetRandomPass(context.Context, *RequestPass) (*RandomPass, error)
 	mustEmbedUnimplementedRandomServer()
@@ -72,7 +72,7 @@ type RandomServer interface {
 type UnimplementedRandomServer struct {
 }
 
-func (UnimplementedRandomServer) GetDate(context.Context, *RandomParams) (*DateTime, error) {
+func (UnimplementedRandomServer) GetDate(context.Context, *RquestDateTime) (*DateTime, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetDate not implemented")
 }
 func (UnimplementedRandomServer) GetRandom(context.Context, *RandomParams) (*RandomInt, error) {
@@ -95,7 +95,7 @@ func RegisterRandomServer(s grpc.ServiceRegistrar, srv RandomServer) {
 }
 
 func _Random_GetDate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RandomParams)
+	in := new(RquestDateTime)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -107,7 +107,7 @@ func _Random_GetDate_Handler(srv interface{}, ctx context.Context, dec func(inte
 		FullMethod: "/Random/GetDate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RandomServer).GetDate(ctx, req.(*RandomParams))
+		return srv.(RandomServer).GetDate(ctx, req.(*RquestDateTime))
 	}
 	return interceptor(ctx, in, info, handler)
 }
