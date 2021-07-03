@@ -24,13 +24,13 @@ message DateTime {
 }
 
 message RequestDateTime {
-    string Value = 2;
+    string Value = 1;
 }
 
 // For random password
 message RequestPass {
     int64 Seed = 1;
-    int64 Length = 8;
+    int64 Length = 2;
 }
 
 message RandomPass {
