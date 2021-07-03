@@ -11,8 +11,7 @@ service Random {
 // For random number
 message RandomParams {
     int64 Seed = 1;
-    int64 Value = 2;
-    int64 Place = 3;
+    int64 Place = 2;
 }
 
 message RandomInt {
